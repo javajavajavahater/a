@@ -1,4 +1,4 @@
-package zoo;
+package org.example.zoo;
 
 public class Dog extends Animal {
     @Override

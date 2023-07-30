@@ -1,6 +1,6 @@
-package zoo;
+package org.example.zoo;
 
-public class Cat extends Animal{
+public class Cat extends Animal {
     @Override
     public void printYourName() {
         System.out.println("Cat");
