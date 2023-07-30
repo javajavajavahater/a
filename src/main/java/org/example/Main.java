@@ -1,6 +1,7 @@
 package org.example;
 
-import org.example.exeptions.NotFoundAnimalName;
+import org.example.exeptions.CustomExeption;
+import org.example.exeptions.NotFoundAnimalNameException;
 import org.example.exeptions.IncorrectFileNameException;
 import org.example.zoo.Animal;
 import org.example.zoo.AnimalFactory;
@@ -10,16 +11,14 @@ public class Main {
     private static final int ANIMALS_NAMES_FILE_PATH_INDEX = 0;
     private static final String delimiterAnimalNameFromText = " ";
 
-    public static void main(String[] args) throws IncorrectFileNameException, NotFoundAnimalName {
+    public static void main(String[] args) throws IncorrectFileNameException, NotFoundAnimalNameException, CustomExeption {
         String animalsNamesFilePath = args[ANIMALS_NAMES_FILE_PATH_INDEX];
-        // todo better parameter name + better method name that gets delimiter as parameter
         String[] animalName = FileMethods.returnLineTextFromFile(animalsNamesFilePath).split(delimiterAnimalNameFromText);
-
-        // todo rename yoel
         createAnimalClassAndImplementsMethodsOfAnimalClass(animalsNamesFilePath, animalName);
     }
 
-    private static void createAnimalClassAndImplementsMethodsOfAnimalClass(String animalsNamesFilePath, String[] textFileSplitBySpace) throws NotFoundAnimalName {
+    private static void createAnimalClassAndImplementsMethodsOfAnimalClass(String animalsNamesFilePath, String[] textFileSplitBySpace)
+            throws NotFoundAnimalNameException, CustomExeption {
         AnimalFactory animalFactory = new AnimalFactory();
 
         for (String animalClassName : textFileSplitBySpace) {
