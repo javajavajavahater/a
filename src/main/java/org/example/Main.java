@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.exeptions.CustomExeption;
+import org.example.exeptions.AnimalExeption;
 import org.example.exeptions.NotFoundAnimalNameException;
 import org.example.exeptions.IncorrectFileNameException;
 import org.example.zoo.Animal;
@@ -9,16 +9,16 @@ import org.example.zoo.FileMethods;
 
 public class Main {
     private static final int ANIMALS_NAMES_FILE_PATH_INDEX = 0;
-    private static final String delimiterAnimalNameFromText = " ";
+    private static final String DELIMITER_ANIMAL_NAME_FROM_TEXT = " ";
 
-    public static void main(String[] args) throws IncorrectFileNameException, NotFoundAnimalNameException, CustomExeption {
+    public static void main(String[] args) throws IncorrectFileNameException, NotFoundAnimalNameException, AnimalExeption {
         String animalsNamesFilePath = args[ANIMALS_NAMES_FILE_PATH_INDEX];
-        String[] animalName = FileMethods.returnLineTextFromFile(animalsNamesFilePath).split(delimiterAnimalNameFromText);
-        createAnimalClassAndImplementsMethodsOfAnimalClass(animalsNamesFilePath, animalName);
+        String[] animalName = FileMethods.returnLineTextFromFile(animalsNamesFilePath).split(DELIMITER_ANIMAL_NAME_FROM_TEXT);
+        createAnimalClassAndImplementsMethodsOfAnimalClass(animalName);
     }
 
-    private static void createAnimalClassAndImplementsMethodsOfAnimalClass(String animalsNamesFilePath, String[] textFileSplitBySpace)
-            throws NotFoundAnimalNameException, CustomExeption {
+    private static void createAnimalClassAndImplementsMethodsOfAnimalClass(String[] textFileSplitBySpace)
+            throws NotFoundAnimalNameException, AnimalExeption {
         AnimalFactory animalFactory = new AnimalFactory();
 
         for (String animalClassName : textFileSplitBySpace) {
