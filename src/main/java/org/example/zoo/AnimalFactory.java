@@ -1,20 +1,20 @@
 package org.example.zoo;
 
-import org.example.exeptions.NotFoundAnimalName;
+import org.example.exeptions.AnimalExeption;
+import org.example.exeptions.NotFoundAnimalNameException;
+
+import java.lang.reflect.InvocationTargetException;
 
 public class AnimalFactory {
+    private static final String ANIMALS_CLASSES_PACKAGE = "org.example.zoo.";
 
-    // todo read about reflection and turn this factory into a dynamic factory
-    public Animal createAnimal(String className) throws NotFoundAnimalName {
-        if (className.equals("Cat")) {
-            return new Cat();
-        } else if (className.equals("Dog")) {
-            return new Dog();
-        } else if (className.equals("Duck")) {
-            return new Duck();
+    public Animal createAnimal(String animalName) throws NotFoundAnimalNameException, AnimalExeption {
+        try {
+            return (Animal) Class.forName(ANIMALS_CLASSES_PACKAGE + animalName).getDeclaredConstructor().newInstance();
+        } catch (InvocationTargetException | InstantiationException |  IllegalAccessException |NoSuchMethodException e) {
+            throw new AnimalExeption("something went wrong", e);
+        } catch (ClassNotFoundException e) {
+            throw new NotFoundAnimalNameException("the class: " + animalName + " not exist", e);
         }
-
-        // todo throw custom exception here with a good message
-        throw new NotFoundAnimalName("animal name %s not exist in classes".formatted(className), new Throwable().getCause());
     }
 }
