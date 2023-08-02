@@ -7,12 +7,6 @@ import org.example.zoo.Animal;
 import org.example.zoo.AnimalFactory;
 import org.example.zoo.FileMethods;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
-
-
 public class Main {
     private static final int ANIMALS_NAMES_FILE_PATH_INDEX = 0;
     private static final String DELIMITER_ANIMAL_NAME_FROM_TEXT = " ";
@@ -27,30 +21,13 @@ public class Main {
 
     private static void createAnimalAndImplementsAnimalClassMethods(String[] animalsNames)
             throws AnimalException, IncorrectFileNameException, PropertiesException {
-        AnimalFactory animalFactory = new AnimalFactory();
+        AnimalFactory animalFactory = new AnimalFactory(ANIMAL_PROPERTIES_FILE_NAME);
 
         for (String animalName : animalsNames) {
-            Animal animal = animalFactory.createAnimal(checkAnimalNameInAnimalProperties
-                    (returnProperties(Main.class.getClassLoader().getResourceAsStream(ANIMAL_PROPERTIES_FILE_NAME)), (animalName)));
+            Animal animal = animalFactory.createAnimal(animalName);
             animal.printYourName();
             animal.printYourSound();
         }
     }
 
-    private static Properties returnProperties(InputStream propertiesFileInputStream) throws IncorrectFileNameException, PropertiesException {
-        try {
-            Properties properties = new Properties();
-            properties.load(propertiesFileInputStream);
-            return properties;
-        } catch (FileNotFoundException e) {
-            throw new IncorrectFileNameException(String.format("incorrect file name %s", propertiesFileInputStream), e);
-        } catch (IOException e) {
-            throw new PropertiesException(String.format("failed read %s file", propertiesFileInputStream), e);
-        }
-    }
-
-    private static String checkAnimalNameInAnimalProperties(Properties animalProperties, String animalName) {
-        return animalProperties.getProperty(animalName, animalName);
-
-    }
 }
