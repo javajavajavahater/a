@@ -2,16 +2,25 @@ package org.example.zoo;
 
 import org.example.exeptions.IncorrectFileNameException;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class FileMethods {
+
+    private FileMethods() {
+    }
 
     public static String returnLineTextFromFile(String fileName) throws IncorrectFileNameException {
         try (Scanner readerFile = new Scanner(new File(fileName))) {
             return readerFile.nextLine();
         } catch (FileNotFoundException e) {
-            throw new IncorrectFileNameException("incorrect file name, check if the argument is the correct name of the file", e);
+            throw new IncorrectFileNameException(String.format("incorrect file name %s,check if the argument is the correct name of the file", fileName), e);
         }
+    }
+
+    public static InputStream getResourceFileAsInputStream(String fileName) {
+        return FileMethods.class.getClassLoader().getResourceAsStream(fileName);
     }
 }
