@@ -4,6 +4,7 @@ import org.example.exeptions.IncorrectFileNameException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class FileMethods {
@@ -17,5 +18,9 @@ public class FileMethods {
         } catch (FileNotFoundException e) {
             throw new IncorrectFileNameException(String.format("incorrect file name %s,check if the argument is the correct name of the file", fileName), e);
         }
+    }
+
+    public static InputStream getResourceFileAsInputStream(String fileName) {
+        return FileMethods.class.getClassLoader().getResourceAsStream(fileName);
     }
 }
